@@ -1,0 +1,353 @@
+{
+  "format": "ovdb-database/draft-1",
+  "id": "https://demodb.dev/countries/",
+  "localId": "countries",
+  "serverId": "https://demodb.dev/ovdb",
+  "serverDbBaseUrl": "https://demodb.dev/ovdb/db/countries/",
+  "title": "Countries",
+  "description": "Countries and territories with ISO 3166-1 alpha-2 and alpha-3 codes, currency, and the latest World Bank population with its year and source; derived from GeoNames and World Bank open data (CC BY 4.0), with hand-checked name aliases for joining sample databases such as Northwind and Chinook.",
+  "homepage": "https://countries.demodb.dev/",
+  "apiUrl": "https://demodb.dev/ovdb/v1/databases/countries",
+  "capabilities": {
+    "read": true,
+    "query": true,
+    "write": false
+  },
+  "deployment": {
+    "engine": "sqlite",
+    "url": "https://cloud.openvaultdb.com/ovdb/dbs/countries",
+    "discovery": "https://demodb.dev/.well-known/openvaultdb"
+  },
+  "model": {
+    "id": "modelspec://github.com/demo-db/countries/countries",
+    "url": "https://countries.demodb.dev/model/countries.modelspec.json",
+    "hclUrl": "https://countries.demodb.dev/model/countries.modelspec.hcl"
+  },
+  "meaning": {
+    "id": "meaning://github.com/demo-db/countries",
+    "url": "https://countries.demodb.dev/model/countries.meaning.yaml"
+  },
+  "publisher": {
+    "name": "DemoDB",
+    "url": "https://demodb.dev",
+    "repository": "https://github.com/demo-db/countries"
+  },
+  "provenance": {
+    "repository": "https://github.com/datatug/datatug-demo-project",
+    "revision": "ade953b68b1b18fcd50d361ed0e18b7043d8a364",
+    "path": "demo-project-1/data/geo",
+    "sha256": "c0dcf133a680ed8255ab3c1960f6d3a43631cda66e030c443bc3b843ff8844db",
+    "license": "CC-BY-4.0",
+    "notes": "Derived and modified from the geo reference data vendored in datatug/datatug-demo-project (itself vendored from ingitdb/geo-ingitdb at a874fb0a95183f536cb574a5ccb45e362274eb6d). Country names, ISO codes, continent, capital, area, currency, calling code, TLD and GeoName ID come from GeoNames countryInfo.txt (CC BY 4.0); population is the latest World Bank SP.POP.TOTL observation (CC BY 4.0) with its year; 36 territories have no World Bank observation and keep a NULL population. The undated GeoNames population is not published. Aliases are hand-checked DataTug mapping data. scripts/rebuild-source.py rebuilds the SQLite fixture from the pinned recipe inputs and CI compares its full logical contents with the committed file; SQLite file bytes can vary by SQLite library version. Neither GeoNames nor the World Bank endorses this database. The sha256 identifies the generated SQLite fixture at data-source/source.sqlite; recipe inputs are identified separately by the provider manifest."
+  },
+  "licences": {
+    "data": "CC-BY-4.0",
+    "model": "CC0-1.0",
+    "meaning": "CC0-1.0"
+  },
+  "recordsets": [
+    {
+      "name": "countries",
+      "kind": "table",
+      "description": "One row per country or territory, keyed by its ISO 3166-1 alpha-2 code: GeoNames names, codes and currency, and the latest World Bank population with its year and source.",
+      "rowCount": 252,
+      "columns": [
+        {
+          "name": "iso2",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "iso3",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "continent",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "capital",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "currency_code",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "currency_name",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "area_km2",
+          "type": "REAL",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "phone_prefix",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "tld",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "geonameid",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "country_source_id",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "population",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "population_year",
+          "type": "INTEGER",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "population_source_id",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "population_source_url",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "iso2",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "population_source_id",
+          "table": "sources",
+          "referencedColumn": "source_id",
+          "constraint": 0,
+          "position": 0
+        },
+        {
+          "column": "country_source_id",
+          "table": "sources",
+          "referencedColumn": "source_id",
+          "constraint": 1,
+          "position": 0
+        }
+      ],
+      "modelEntity": "countries"
+    },
+    {
+      "name": "country_aliases",
+      "kind": "table",
+      "description": "Spellings other datasets use for a country (for example Northwind's 'USA' and 'UK'), each mapped to a countries row with its provenance.",
+      "rowCount": 25,
+      "columns": [
+        {
+          "name": "alias",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "country_iso2",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "source",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "alias",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [
+        {
+          "column": "country_iso2",
+          "table": "countries",
+          "referencedColumn": "iso2",
+          "constraint": 0,
+          "position": 0
+        }
+      ],
+      "modelEntity": "country_aliases"
+    },
+    {
+      "name": "sources",
+      "kind": "table",
+      "description": "The data sources of this database with publisher, licence, attribution and the changes made.",
+      "rowCount": 3,
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": true,
+          "primaryKeyPosition": 1,
+          "defaultValue": null
+        },
+        {
+          "name": "publisher",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "dataset",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "url",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "licence",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "licence_url",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "attribution",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "modifications",
+          "type": "TEXT",
+          "nullable": false,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "retrieved_at",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        },
+        {
+          "name": "source_updated",
+          "type": "TEXT",
+          "nullable": true,
+          "primaryKey": false,
+          "primaryKeyPosition": null,
+          "defaultValue": null
+        }
+      ],
+      "primaryKey": [
+        {
+          "column": "source_id",
+          "position": 1
+        }
+      ],
+      "foreignKeys": [],
+      "modelEntity": "sources"
+    }
+  ]
+}

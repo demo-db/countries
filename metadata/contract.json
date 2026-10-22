@@ -1,0 +1,1176 @@
+{
+  "contractVersion": 1,
+  "manifest": {
+    "contractVersion": 1,
+    "id": "countries",
+    "name": "Countries",
+    "description": "Countries and territories with ISO 3166-1 alpha-2 and alpha-3 codes, currency, and the latest World Bank population with its year and source; derived from GeoNames and World Bank open data (CC BY 4.0), with hand-checked name aliases for joining sample databases such as Northwind and Chinook.",
+    "domain": "Geographic reference data",
+    "siteHost": "countries.demodb.dev",
+    "aliases": [],
+    "source": {
+      "repository": "https://github.com/datatug/datatug-demo-project",
+      "revision": "ade953b68b1b18fcd50d361ed0e18b7043d8a364",
+      "path": "demo-project-1/data/geo",
+      "license": "CC-BY-4.0",
+      "licenseFile": "data-source/LICENSE.md",
+      "notes": "Derived and modified from the geo reference data vendored in datatug/datatug-demo-project (itself vendored from ingitdb/geo-ingitdb at a874fb0a95183f536cb574a5ccb45e362274eb6d). Country names, ISO codes, continent, capital, area, currency, calling code, TLD and GeoName ID come from GeoNames countryInfo.txt (CC BY 4.0); population is the latest World Bank SP.POP.TOTL observation (CC BY 4.0) with its year; 36 territories have no World Bank observation and keep a NULL population. The undated GeoNames population is not published. Aliases are hand-checked DataTug mapping data. scripts/rebuild-source.py rebuilds the SQLite fixture from the pinned recipe inputs and CI compares its full logical contents with the committed file; SQLite file bytes can vary by SQLite library version. Neither GeoNames nor the World Bank endorses this database.",
+      "recipe": [
+        {
+          "path": "demo-project-1/data/geo",
+          "files": 498,
+          "treeSha256": "cbeb6684d8aa8e474e2aed2eefaa68515c92f55b09bada430ee75870978ba899"
+        }
+      ],
+      "databaseSha256": "c0dcf133a680ed8255ab3c1960f6d3a43631cda66e030c443bc3b843ff8844db"
+    },
+    "tableDescriptions": {
+      "countries": "One row per country or territory, keyed by its ISO 3166-1 alpha-2 code: GeoNames names, codes and currency, and the latest World Bank population with its year and source.",
+      "country_aliases": "Spellings other datasets use for a country (for example Northwind's 'USA' and 'UK'), each mapped to a countries row with its provenance.",
+      "sources": "The data sources of this database with publisher, licence, attribution and the changes made.",
+      "country_names": "Every country name and every alias that differs from a name, for joining a free-text country column to countries."
+    },
+    "columnDescriptions": {
+      "countries": {
+        "iso2": "ISO 3166-1 alpha-2 code (GeoNames).",
+        "iso3": "ISO 3166-1 alpha-3 code (GeoNames).",
+        "name": "English country name (GeoNames).",
+        "continent": "GeoNames continent code: AF, AS, EU, NA, OC, SA or AN.",
+        "currency_code": "ISO 4217 currency code (GeoNames).",
+        "currency_name": "Currency name as GeoNames spells it.",
+        "area_km2": "Area in square kilometres (GeoNames).",
+        "country_source_id": "Source of the country's names and codes.",
+        "population": "Total population, World Bank SP.POP.TOTL, for population_year; NULL when the World Bank has no observation.",
+        "population_year": "Year of the World Bank population observation.",
+        "population_source_id": "Source of the population value.",
+        "population_source_url": "World Bank Indicators API call that returns this observation."
+      },
+      "country_aliases": {
+        "alias": "The exact text another dataset uses for the country.",
+        "country_iso2": "The ISO alpha-2 code of the country the alias means.",
+        "source": "Which dataset spells it this way and how the match was made."
+      }
+    },
+    "semantics": {},
+    "queries": [
+      {
+        "title": "Country of a Northwind ship country",
+        "sql": "SELECT c.name, c.iso2, c.iso3, c.currency_code, c.population, c.population_year, s.publisher AS population_source FROM country_names n JOIN countries c ON c.iso2 = n.iso2 LEFT JOIN sources s ON s.source_id = c.population_source_id WHERE n.label = 'Canada';"
+      }
+    ],
+    "capabilities": {
+      "exports": [
+        "sqlite",
+        "csv",
+        "json",
+        "sql"
+      ],
+      "ovdb": {
+        "available": true,
+        "canonicalUrl": "https://demodb.dev/countries/",
+        "serverId": "https://demodb.dev/ovdb",
+        "serverDbBaseUrl": "https://demodb.dev/ovdb/db/countries/",
+        "connection": "https://demodb.dev/ovdb/v1/databases/countries",
+        "query": true,
+        "readOnly": true,
+        "deploymentVerified": false
+      },
+      "datatug": {
+        "available": false
+      }
+    },
+    "generator": {
+      "publisher": {
+        "name": "DemoDB",
+        "url": "https://demodb.dev",
+        "repository": "https://github.com/demo-db/countries"
+      },
+      "licences": {
+        "model": "CC0-1.0",
+        "meaning": "CC0-1.0"
+      },
+      "emitModelSpdxLicense": true,
+      "model": {
+        "address": "modelspec://github.com/demo-db/countries/countries",
+        "moduleId": "github.com/demo-db/countries/countries",
+        "name": "countries",
+        "version": "0.1.0"
+      },
+      "meaning": {
+        "id": "countries",
+        "address": "meaning://github.com/demo-db/countries",
+        "name": "Countries",
+        "description": "What the Countries reference database means: countries keyed by ISO 3166-1 code with their currency and dated population, and aliases that map other datasets' country spellings to them. Concepts extend the core country, country-code and population concepts.",
+        "license": "CC0-1.0",
+        "core": {
+          "address": "meaning://github.com/meaninggraph/core",
+          "revision": "982916d73f0a35ff2558b0062f58aa3ac4f24d97"
+        },
+        "sources": [
+          {
+            "id": "world-bank-sp-pop-totl",
+            "provider": "The World Bank",
+            "dataset": "World Development Indicators SP.POP.TOTL",
+            "title": "Population, total",
+            "license": "CC-BY-4.0",
+            "url": "https://data.worldbank.org/indicator/SP.POP.TOTL"
+          }
+        ],
+        "concepts": [
+          {
+            "id": "country",
+            "kind": "entity",
+            "label": "Country",
+            "description": "A country or territory in this database, keyed by its ISO 3166-1 alpha-2 code.",
+            "extends": "meaning://github.com/meaninggraph/core/country?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+            "bindings": [
+              {
+                "recordset": "countries",
+                "role": "entity"
+              },
+              {
+                "recordset": "countries",
+                "role": "identifier",
+                "property": "iso2"
+              },
+              {
+                "recordset": "countries",
+                "role": "display-name",
+                "property": "name",
+                "match": "labels"
+              },
+              {
+                "recordset": "country_aliases",
+                "role": "foreign-key",
+                "property": "country_iso2"
+              }
+            ]
+          },
+          {
+            "id": "country-alpha3",
+            "kind": "attribute",
+            "label": "ISO alpha-3 code",
+            "description": "The country's ISO 3166-1 alpha-3 code.",
+            "extends": "country-code",
+            "of": "country",
+            "bindings": [
+              {
+                "recordset": "countries",
+                "role": "value",
+                "property": "iso3",
+                "match": "codes.alpha3"
+              }
+            ]
+          },
+          {
+            "id": "country-currency",
+            "kind": "attribute",
+            "label": "Country currency",
+            "description": "The ISO 4217 code of the currency GeoNames lists for the country.",
+            "of": "country",
+            "bindings": [
+              {
+                "recordset": "countries",
+                "role": "value",
+                "property": "currency_code"
+              }
+            ]
+          },
+          {
+            "id": "country-population",
+            "kind": "measure",
+            "label": "Country population",
+            "description": "The World Bank total population of the country in population_year.",
+            "extends": "population",
+            "of": "country",
+            "unit": "people",
+            "source": "world-bank-sp-pop-totl",
+            "measure": {
+              "formula": "The World Bank SP.POP.TOTL value for the country in population_year.",
+              "aggregation": "none"
+            },
+            "bindings": [
+              {
+                "recordset": "countries",
+                "role": "value",
+                "property": "population"
+              }
+            ]
+          },
+          {
+            "id": "country-alias",
+            "kind": "entity",
+            "label": "Country alias",
+            "description": "A spelling another dataset uses for a country, mapped to that country.",
+            "bindings": [
+              {
+                "recordset": "country_aliases",
+                "role": "entity"
+              },
+              {
+                "recordset": "country_aliases",
+                "role": "identifier",
+                "property": "alias"
+              }
+            ]
+          }
+        ]
+      },
+      "ovdb": {
+        "query": true,
+        "deployment": {
+          "engine": "sqlite",
+          "url": "https://cloud.openvaultdb.com/ovdb/dbs/countries",
+          "discovery": "https://demodb.dev/.well-known/openvaultdb"
+        },
+        "recordsets": [
+          "countries",
+          "country_aliases",
+          "sources"
+        ]
+      }
+    },
+    "dataFile": "data-source/source.sqlite"
+  },
+  "schema": {
+    "contractVersion": 1,
+    "database": {
+      "id": "countries",
+      "name": "Countries"
+    },
+    "source": {
+      "repository": "https://github.com/datatug/datatug-demo-project",
+      "revision": "ade953b68b1b18fcd50d361ed0e18b7043d8a364",
+      "path": "demo-project-1/data/geo",
+      "license": "CC-BY-4.0",
+      "licenseFile": "data-source/LICENSE.md",
+      "notes": "Derived and modified from the geo reference data vendored in datatug/datatug-demo-project (itself vendored from ingitdb/geo-ingitdb at a874fb0a95183f536cb574a5ccb45e362274eb6d). Country names, ISO codes, continent, capital, area, currency, calling code, TLD and GeoName ID come from GeoNames countryInfo.txt (CC BY 4.0); population is the latest World Bank SP.POP.TOTL observation (CC BY 4.0) with its year; 36 territories have no World Bank observation and keep a NULL population. The undated GeoNames population is not published. Aliases are hand-checked DataTug mapping data. scripts/rebuild-source.py rebuilds the SQLite fixture from the pinned recipe inputs and CI compares its full logical contents with the committed file; SQLite file bytes can vary by SQLite library version. Neither GeoNames nor the World Bank endorses this database.",
+      "recipe": [
+        {
+          "path": "demo-project-1/data/geo",
+          "files": 498,
+          "treeSha256": "cbeb6684d8aa8e474e2aed2eefaa68515c92f55b09bada430ee75870978ba899"
+        }
+      ],
+      "databaseSha256": "c0dcf133a680ed8255ab3c1960f6d3a43631cda66e030c443bc3b843ff8844db"
+    },
+    "blobEncoding": "base64",
+    "modelingLimitations": [],
+    "tables": [
+      {
+        "name": "countries",
+        "modelEntity": "countries",
+        "modelRecordset": null,
+        "kind": "table",
+        "description": "One row per country or territory, keyed by its ISO 3166-1 alpha-2 code: GeoNames names, codes and currency, and the latest World Bank population with its year and source.",
+        "columns": [
+          {
+            "name": "iso2",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": true,
+            "primaryKeyOrder": 1,
+            "primaryKeyPosition": 1,
+            "defaultValue": null,
+            "description": "ISO 3166-1 alpha-2 code (GeoNames)."
+          },
+          {
+            "name": "iso3",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "ISO 3166-1 alpha-3 code (GeoNames)."
+          },
+          {
+            "name": "name",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "English country name (GeoNames)."
+          },
+          {
+            "name": "continent",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "GeoNames continent code: AF, AS, EU, NA, OC, SA or AN."
+          },
+          {
+            "name": "capital",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "currency_code",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "ISO 4217 currency code (GeoNames)."
+          },
+          {
+            "name": "currency_name",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "Currency name as GeoNames spells it."
+          },
+          {
+            "name": "area_km2",
+            "type": "REAL",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "Area in square kilometres (GeoNames)."
+          },
+          {
+            "name": "phone_prefix",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "tld",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "geonameid",
+            "type": "INTEGER",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "country_source_id",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "Source of the country's names and codes."
+          },
+          {
+            "name": "population",
+            "type": "INTEGER",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "Total population, World Bank SP.POP.TOTL, for population_year; NULL when the World Bank has no observation."
+          },
+          {
+            "name": "population_year",
+            "type": "INTEGER",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "Year of the World Bank population observation."
+          },
+          {
+            "name": "population_source_id",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "Source of the population value."
+          },
+          {
+            "name": "population_source_url",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "World Bank Indicators API call that returns this observation."
+          }
+        ],
+        "primaryKey": [
+          {
+            "column": "iso2",
+            "position": 1
+          }
+        ],
+        "uniqueKeys": [
+          {
+            "name": "countries_iso3",
+            "origin": "c",
+            "columns": [
+              "iso3"
+            ]
+          }
+        ],
+        "uniqueIndexes": [
+          {
+            "name": "countries_iso3",
+            "origin": "c",
+            "partial": false,
+            "columns": [
+              {
+                "position": 0,
+                "column": "iso3",
+                "expression": false,
+                "descending": false,
+                "collation": "BINARY"
+              }
+            ],
+            "sql": "CREATE UNIQUE INDEX countries_iso3 ON countries (iso3)"
+          },
+          {
+            "name": "sqlite_autoindex_countries_1",
+            "origin": "pk",
+            "partial": false,
+            "columns": [
+              {
+                "position": 0,
+                "column": "iso2",
+                "expression": false,
+                "descending": false,
+                "collation": "BINARY"
+              }
+            ],
+            "sql": null
+          }
+        ],
+        "foreignKeys": [
+          {
+            "column": "population_source_id",
+            "table": "sources",
+            "referencedColumn": "source_id",
+            "constraint": 0,
+            "position": 0,
+            "onUpdate": "NO ACTION",
+            "onDelete": "NO ACTION",
+            "match": "NONE"
+          },
+          {
+            "column": "country_source_id",
+            "table": "sources",
+            "referencedColumn": "source_id",
+            "constraint": 1,
+            "position": 0,
+            "onUpdate": "NO ACTION",
+            "onDelete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "rowCount": 252,
+        "viewSql": null,
+        "tableSql": "CREATE TABLE countries (\n  iso2 TEXT PRIMARY KEY NOT NULL CHECK (length(iso2) = 2),\n  iso3 TEXT NOT NULL CHECK (length(iso3) = 3),\n  name TEXT NOT NULL,\n  continent TEXT,\n  capital TEXT,\n  currency_code TEXT,\n  currency_name TEXT,\n  area_km2 REAL,\n  phone_prefix TEXT,\n  tld TEXT,\n  geonameid INTEGER,\n  country_source_id TEXT NOT NULL REFERENCES sources (source_id),\n  population INTEGER,\n  population_year INTEGER,\n  population_source_id TEXT REFERENCES sources (source_id),\n  population_source_url TEXT\n)",
+        "rows": [
+          {
+            "iso2": "AD",
+            "iso3": "AND",
+            "name": "Andorra",
+            "continent": "EU",
+            "capital": "Andorra la Vella",
+            "currency_code": "EUR",
+            "currency_name": "Euro",
+            "area_km2": 468.0,
+            "phone_prefix": "376",
+            "tld": ".ad",
+            "geonameid": 3041565,
+            "country_source_id": "geonames-countryinfo",
+            "population": 82904,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/AND/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AE",
+            "iso3": "ARE",
+            "name": "United Arab Emirates",
+            "continent": "AS",
+            "capital": "Abu Dhabi",
+            "currency_code": "AED",
+            "currency_name": "Dirham",
+            "area_km2": 82880.0,
+            "phone_prefix": "971",
+            "tld": ".ae",
+            "geonameid": 290557,
+            "country_source_id": "geonames-countryinfo",
+            "population": 11513149,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/ARE/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AF",
+            "iso3": "AFG",
+            "name": "Afghanistan",
+            "continent": "AS",
+            "capital": "Kabul",
+            "currency_code": "AFN",
+            "currency_name": "Afghani",
+            "area_km2": 647500.0,
+            "phone_prefix": "93",
+            "tld": ".af",
+            "geonameid": 1149361,
+            "country_source_id": "geonames-countryinfo",
+            "population": 43844111,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/AFG/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AG",
+            "iso3": "ATG",
+            "name": "Antigua and Barbuda",
+            "continent": "NA",
+            "capital": "St. John's",
+            "currency_code": "XCD",
+            "currency_name": "Dollar",
+            "area_km2": 443.0,
+            "phone_prefix": "+1-268",
+            "tld": ".ag",
+            "geonameid": 3576396,
+            "country_source_id": "geonames-countryinfo",
+            "population": 94209,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/ATG/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AI",
+            "iso3": "AIA",
+            "name": "Anguilla",
+            "continent": "NA",
+            "capital": "The Valley",
+            "currency_code": "XCD",
+            "currency_name": "Dollar",
+            "area_km2": 102.0,
+            "phone_prefix": "+1-264",
+            "tld": ".ai",
+            "geonameid": 3573511,
+            "country_source_id": "geonames-countryinfo",
+            "population": null,
+            "population_year": null,
+            "population_source_id": null,
+            "population_source_url": null
+          },
+          {
+            "iso2": "AL",
+            "iso3": "ALB",
+            "name": "Albania",
+            "continent": "EU",
+            "capital": "Tirana",
+            "currency_code": "ALL",
+            "currency_name": "Lek",
+            "area_km2": 28748.0,
+            "phone_prefix": "355",
+            "tld": ".al",
+            "geonameid": 783754,
+            "country_source_id": "geonames-countryinfo",
+            "population": 2349580,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/ALB/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AM",
+            "iso3": "ARM",
+            "name": "Armenia",
+            "continent": "AS",
+            "capital": "Yerevan",
+            "currency_code": "AMD",
+            "currency_name": "Dram",
+            "area_km2": 29800.0,
+            "phone_prefix": "374",
+            "tld": ".am",
+            "geonameid": 174982,
+            "country_source_id": "geonames-countryinfo",
+            "population": 3086700,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/ARM/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AN",
+            "iso3": "ANT",
+            "name": "Netherlands Antilles",
+            "continent": "NA",
+            "capital": "Willemstad",
+            "currency_code": "ANG",
+            "currency_name": "Guilder",
+            "area_km2": 960.0,
+            "phone_prefix": "599",
+            "tld": ".an",
+            "geonameid": 8505032,
+            "country_source_id": "geonames-countryinfo",
+            "population": null,
+            "population_year": null,
+            "population_source_id": null,
+            "population_source_url": null
+          },
+          {
+            "iso2": "AO",
+            "iso3": "AGO",
+            "name": "Angola",
+            "continent": "AF",
+            "capital": "Luanda",
+            "currency_code": "AOA",
+            "currency_name": "Kwanza",
+            "area_km2": 1246700.0,
+            "phone_prefix": "244",
+            "tld": ".ao",
+            "geonameid": 3351879,
+            "country_source_id": "geonames-countryinfo",
+            "population": 39040039,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/AGO/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AQ",
+            "iso3": "ATA",
+            "name": "Antarctica",
+            "continent": "AN",
+            "capital": null,
+            "currency_code": null,
+            "currency_name": null,
+            "area_km2": 14000000.0,
+            "phone_prefix": null,
+            "tld": ".aq",
+            "geonameid": 6697173,
+            "country_source_id": "geonames-countryinfo",
+            "population": null,
+            "population_year": null,
+            "population_source_id": null,
+            "population_source_url": null
+          },
+          {
+            "iso2": "AR",
+            "iso3": "ARG",
+            "name": "Argentina",
+            "continent": "SA",
+            "capital": "Buenos Aires",
+            "currency_code": "ARS",
+            "currency_name": "Peso",
+            "area_km2": 2766890.0,
+            "phone_prefix": "54",
+            "tld": ".ar",
+            "geonameid": 3865483,
+            "country_source_id": "geonames-countryinfo",
+            "population": 45851378,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/ARG/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          },
+          {
+            "iso2": "AS",
+            "iso3": "ASM",
+            "name": "American Samoa",
+            "continent": "OC",
+            "capital": "Pago Pago",
+            "currency_code": "USD",
+            "currency_name": "Dollar",
+            "area_km2": 199.0,
+            "phone_prefix": "+1-684",
+            "tld": ".as",
+            "geonameid": 5880801,
+            "country_source_id": "geonames-countryinfo",
+            "population": 46029,
+            "population_year": 2025,
+            "population_source_id": "worldbank-sp-pop-totl",
+            "population_source_url": "https://api.worldbank.org/v2/country/ASM/indicator/SP.POP.TOTL?format=json&mrnev=1"
+          }
+        ]
+      },
+      {
+        "name": "country_aliases",
+        "modelEntity": "country_aliases",
+        "modelRecordset": null,
+        "kind": "table",
+        "description": "Spellings other datasets use for a country (for example Northwind's 'USA' and 'UK'), each mapped to a countries row with its provenance.",
+        "columns": [
+          {
+            "name": "alias",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": true,
+            "primaryKeyOrder": 1,
+            "primaryKeyPosition": 1,
+            "defaultValue": null,
+            "description": "The exact text another dataset uses for the country."
+          },
+          {
+            "name": "country_iso2",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "The ISO alpha-2 code of the country the alias means."
+          },
+          {
+            "name": "source",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null,
+            "description": "Which dataset spells it this way and how the match was made."
+          }
+        ],
+        "primaryKey": [
+          {
+            "column": "alias",
+            "position": 1
+          }
+        ],
+        "uniqueKeys": [],
+        "uniqueIndexes": [
+          {
+            "name": "sqlite_autoindex_country_aliases_1",
+            "origin": "pk",
+            "partial": false,
+            "columns": [
+              {
+                "position": 0,
+                "column": "alias",
+                "expression": false,
+                "descending": false,
+                "collation": "BINARY"
+              }
+            ],
+            "sql": null
+          }
+        ],
+        "foreignKeys": [
+          {
+            "column": "country_iso2",
+            "table": "countries",
+            "referencedColumn": "iso2",
+            "constraint": 0,
+            "position": 0,
+            "onUpdate": "NO ACTION",
+            "onDelete": "NO ACTION",
+            "match": "NONE"
+          }
+        ],
+        "rowCount": 25,
+        "viewSql": null,
+        "tableSql": "CREATE TABLE country_aliases (\n  alias TEXT PRIMARY KEY NOT NULL,\n  country_iso2 TEXT NOT NULL REFERENCES countries (iso2),\n  source TEXT NOT NULL\n)",
+        "rows": [
+          {
+            "alias": "Argentina",
+            "country_iso2": "AR",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Australia",
+            "country_iso2": "AU",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Austria",
+            "country_iso2": "AT",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Belgium",
+            "country_iso2": "BE",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Brazil",
+            "country_iso2": "BR",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Canada",
+            "country_iso2": "CA",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Chile",
+            "country_iso2": "CL",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Czech Republic",
+            "country_iso2": "CZ",
+            "source": "chinook-database Invoice.BillingCountry; manual match: Chinook uses the former short name; countries.names.en is 'Czechia'"
+          },
+          {
+            "alias": "Denmark",
+            "country_iso2": "DK",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Finland",
+            "country_iso2": "FI",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "France",
+            "country_iso2": "FR",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          },
+          {
+            "alias": "Germany",
+            "country_iso2": "DE",
+            "source": "chinook-database Invoice.BillingCountry; exact match on countries.names.en"
+          }
+        ]
+      },
+      {
+        "name": "sources",
+        "modelEntity": "sources",
+        "modelRecordset": null,
+        "kind": "table",
+        "description": "The data sources of this database with publisher, licence, attribution and the changes made.",
+        "columns": [
+          {
+            "name": "source_id",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": true,
+            "primaryKeyOrder": 1,
+            "primaryKeyPosition": 1,
+            "defaultValue": null
+          },
+          {
+            "name": "publisher",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "dataset",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "url",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "licence",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "licence_url",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "attribution",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "modifications",
+            "type": "TEXT",
+            "nullable": false,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "retrieved_at",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "source_updated",
+            "type": "TEXT",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          }
+        ],
+        "primaryKey": [
+          {
+            "column": "source_id",
+            "position": 1
+          }
+        ],
+        "uniqueKeys": [],
+        "uniqueIndexes": [
+          {
+            "name": "sqlite_autoindex_sources_1",
+            "origin": "pk",
+            "partial": false,
+            "columns": [
+              {
+                "position": 0,
+                "column": "source_id",
+                "expression": false,
+                "descending": false,
+                "collation": "BINARY"
+              }
+            ],
+            "sql": null
+          }
+        ],
+        "foreignKeys": [],
+        "rowCount": 3,
+        "viewSql": null,
+        "tableSql": "CREATE TABLE sources (\n  source_id TEXT PRIMARY KEY NOT NULL,\n  publisher TEXT NOT NULL,\n  dataset TEXT NOT NULL,\n  url TEXT NOT NULL,\n  licence TEXT NOT NULL,\n  licence_url TEXT NOT NULL,\n  attribution TEXT NOT NULL,\n  modifications TEXT NOT NULL,\n  retrieved_at TEXT,\n  source_updated TEXT\n)",
+        "rows": [
+          {
+            "source_id": "datatug-country-aliases",
+            "publisher": "DataTug",
+            "dataset": "Country aliases (hand-checked spellings used by Chinook and Northwind)",
+            "url": "https://github.com/datatug/datatug-demo-project/tree/main/demo-project-1/data/geo/country_aliases",
+            "licence": "CC-BY-4.0",
+            "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+            "attribution": "Hand-checked mapping data by DataTug; no third-party content. Each alias row states in source which system spells it that way and how it was matched.",
+            "modifications": "The vendored Chinook aliases plus Northwind spellings that differ from the GeoNames English name.",
+            "retrieved_at": null,
+            "source_updated": null
+          },
+          {
+            "source_id": "geonames-countryinfo",
+            "publisher": "GeoNames",
+            "dataset": "countryInfo.txt (GeoNames geographical database)",
+            "url": "https://download.geonames.org/export/dump/countryInfo.txt",
+            "licence": "CC-BY-4.0",
+            "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+            "attribution": "Country names, ISO 3166-1 codes, continent, capital, area, currency, calling code, TLD and GeoName ID: (c) GeoNames, https://www.geonames.org/, licensed under CC BY 4.0.",
+            "modifications": "Modified: re-keyed by upper-case ISO 3166-1 alpha-2 code, columns renamed, the English name kept as name, the undated GeoNames population dropped (population comes from the World Bank), and stored as SQLite. GeoNames does not endorse this database.",
+            "retrieved_at": null,
+            "source_updated": null
+          },
+          {
+            "source_id": "worldbank-sp-pop-totl",
+            "publisher": "The World Bank",
+            "dataset": "World Development Indicators, SP.POP.TOTL (Population, total)",
+            "url": "https://data.worldbank.org/indicator/SP.POP.TOTL",
+            "licence": "CC-BY-4.0",
+            "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+            "attribution": "Population: The World Bank, World Development Indicators, indicator SP.POP.TOTL, retrieved from the World Bank Indicators API v2 (https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=json&mrnev=1). Data (c) The World Bank, licensed under CC BY 4.0.",
+            "modifications": "Modified: only the most recent non-empty observation per country is kept, with its year; World Bank aggregates and entities without a GeoNames country are dropped; rows are joined to countries by ISO 3166-1 alpha-3 code. Values are the World Bank's figures as published. The World Bank does not endorse this database.",
+            "retrieved_at": "2026-10-02T09:26:00Z",
+            "source_updated": "2026-07-13"
+          }
+        ]
+      },
+      {
+        "name": "country_names",
+        "modelEntity": null,
+        "modelRecordset": null,
+        "kind": "view",
+        "description": "Every country name and every alias that differs from a name, for joining a free-text country column to countries.",
+        "columns": [
+          {
+            "name": "label",
+            "type": "",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "iso2",
+            "type": "",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          },
+          {
+            "name": "matched_by",
+            "type": "",
+            "nullable": true,
+            "primaryKey": false,
+            "primaryKeyOrder": 0,
+            "primaryKeyPosition": null,
+            "defaultValue": null
+          }
+        ],
+        "primaryKey": [],
+        "foreignKeys": [],
+        "rowCount": 256,
+        "viewSql": "CREATE VIEW country_names AS\n  SELECT name AS label, iso2, 'name' AS matched_by FROM countries\n  UNION ALL\n  SELECT alias AS label, country_iso2 AS iso2, 'alias' AS matched_by FROM country_aliases\n  WHERE alias NOT IN (SELECT name FROM countries)",
+        "tableSql": null,
+        "rows": [
+          {
+            "label": "Afghanistan",
+            "iso2": "AF",
+            "matched_by": "name"
+          },
+          {
+            "label": "Aland Islands",
+            "iso2": "AX",
+            "matched_by": "name"
+          },
+          {
+            "label": "Albania",
+            "iso2": "AL",
+            "matched_by": "name"
+          },
+          {
+            "label": "Algeria",
+            "iso2": "DZ",
+            "matched_by": "name"
+          },
+          {
+            "label": "American Samoa",
+            "iso2": "AS",
+            "matched_by": "name"
+          },
+          {
+            "label": "Andorra",
+            "iso2": "AD",
+            "matched_by": "name"
+          },
+          {
+            "label": "Angola",
+            "iso2": "AO",
+            "matched_by": "name"
+          },
+          {
+            "label": "Anguilla",
+            "iso2": "AI",
+            "matched_by": "name"
+          },
+          {
+            "label": "Antarctica",
+            "iso2": "AQ",
+            "matched_by": "name"
+          },
+          {
+            "label": "Antigua and Barbuda",
+            "iso2": "AG",
+            "matched_by": "name"
+          },
+          {
+            "label": "Argentina",
+            "iso2": "AR",
+            "matched_by": "name"
+          },
+          {
+            "label": "Armenia",
+            "iso2": "AM",
+            "matched_by": "name"
+          }
+        ]
+      }
+    ],
+    "sourceViews": []
+  },
+  "exports": [
+    {
+      "table": null,
+      "format": "sqlite",
+      "path": "artifacts/countries.sqlite",
+      "bytes": 81920
+    },
+    {
+      "table": null,
+      "format": "sql",
+      "path": "artifacts/countries.sql",
+      "bytes": 68734
+    },
+    {
+      "table": "countries",
+      "format": "json",
+      "path": "artifacts/data/countries.json",
+      "bytes": 113538
+    },
+    {
+      "table": "countries",
+      "format": "csv",
+      "path": "artifacts/data/countries.csv",
+      "bytes": 47234
+    },
+    {
+      "table": "country_aliases",
+      "format": "json",
+      "path": "artifacts/data/country_aliases.json",
+      "bytes": 3485
+    },
+    {
+      "table": "country_aliases",
+      "format": "csv",
+      "path": "artifacts/data/country_aliases.csv",
+      "bytes": 2360
+    },
+    {
+      "table": "sources",
+      "format": "json",
+      "path": "artifacts/data/sources.json",
+      "bytes": 2432
+    },
+    {
+      "table": "sources",
+      "format": "csv",
+      "path": "artifacts/data/sources.csv",
+      "bytes": 2054
+    }
+  ]
+}

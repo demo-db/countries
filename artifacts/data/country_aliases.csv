@@ -1,0 +1,26 @@
+alias,country_iso2,source
+Argentina,AR,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Australia,AU,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Austria,AT,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Belgium,BE,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Brazil,BR,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Canada,CA,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Chile,CL,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Czech Republic,CZ,chinook-database Invoice.BillingCountry; manual match: Chinook uses the former short name; countries.names.en is 'Czechia'
+Denmark,DK,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Finland,FI,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+France,FR,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Germany,DE,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Hungary,HU,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+India,IN,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Ireland,IE,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Italy,IT,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Netherlands,NL,chinook-database Invoice.BillingCountry; manual match: countries.names.en is 'The Netherlands'
+Norway,NO,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Poland,PL,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Portugal,PT,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Spain,ES,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+Sweden,SE,chinook-database Invoice.BillingCountry; exact match on countries.names.en
+UK,GB,"northwind Orders.ShipCountry, Customers.Country and Suppliers.Country; manual match: Northwind spells it 'UK'; countries.name is 'United Kingdom'"
+USA,US,chinook-database Invoice.BillingCountry; manual match: Chinook spells it 'USA'; countries.names.en is 'United States'
+United Kingdom,GB,chinook-database Invoice.BillingCountry; exact match on countries.names.en

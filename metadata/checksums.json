@@ -1,0 +1,73 @@
+{
+  "contractVersion": 1,
+  "files": {
+    "artifacts/countries.sql": {
+      "sha256": "4f43ba028b3e519a98859efaf43d0e7e3f342b6fcdbfe5f29a7bb5193d85f76c",
+      "bytes": 68734
+    },
+    "artifacts/countries.sqlite": {
+      "sha256": "c0dcf133a680ed8255ab3c1960f6d3a43631cda66e030c443bc3b843ff8844db",
+      "bytes": 81920
+    },
+    "artifacts/data/countries.csv": {
+      "sha256": "c899128ec062aa9cfa3be1ef85d3b8b2a55c1aba9f0b651dd93d65a95fadb106",
+      "bytes": 47234
+    },
+    "artifacts/data/countries.json": {
+      "sha256": "1566ec34bd714607f86028dfd83c73563173d8d28632a2efe38d72dc525add9e",
+      "bytes": 113538
+    },
+    "artifacts/data/country_aliases.csv": {
+      "sha256": "a147dc66272ccdcbe487b3af5a2a572e10a41c304ef73112bea6b3dd41837c6f",
+      "bytes": 2360
+    },
+    "artifacts/data/country_aliases.json": {
+      "sha256": "226f9072bf52fc10d3ae919fe57b1770c3fc851baa5cdc76c1a07712bec18772",
+      "bytes": 3485
+    },
+    "artifacts/data/sources.csv": {
+      "sha256": "be16718b676f056230b4f8a84eaf4557ba2ed4d32fb719af9415918b8f9cfd50",
+      "bytes": 2054
+    },
+    "artifacts/data/sources.json": {
+      "sha256": "69ee9a361b95fa943d445a8501db6108bac817d36cf11c290c5035ee6b7b0f6f",
+      "bytes": 2432
+    },
+    "manifest.json": {
+      "sha256": "fa30aeddafd01a724cc8368eee23b1a29c8c3b6b580f514eb44498ae0cf78e14",
+      "bytes": 8900
+    },
+    "metadata/contract.json": {
+      "sha256": "cbb06695dcb8c2a71eb432ba47066bbe798fb2f6d0cf0d0c5a110aaa38e83eaf",
+      "bytes": 43046
+    },
+    "metadata/schema.json": {
+      "sha256": "4df189d10cd201a265ae46c3ebcb288b79e4adadc7ec9e59e439732b8e0850bc",
+      "bytes": 30277
+    },
+    "model/countries.meaning.yaml": {
+      "sha256": "5e79005bc89c8840cd06fba7e829b80857f102c1a84390c86e00017b8afe7a7d",
+      "bytes": 3853
+    },
+    "model/countries.modelspec.hcl": {
+      "sha256": "cf8c79b7fd1405d763c63c469003445cd99a82566d7319b2d999852f6e432634",
+      "bytes": 2000
+    },
+    "model/countries.modelspec.json": {
+      "sha256": "5ad17753d962715fa90f62bd8b567c5614c220d3231f9719d5bba0c75e353c63",
+      "bytes": 2670
+    },
+    "ovdb-database.json": {
+      "sha256": "8954977ab13bc6ccf0569ba8de9531f6a229649e204762e2ed56389e9a4775ad",
+      "bytes": 10725
+    },
+    "ovdb.yaml": {
+      "sha256": "7f1ecd6d80f25ec5757b7a225de67e3a3381cc4387d8a8d31f28afbff0a08647",
+      "bytes": 1342
+    },
+    "schemas/ovdb-database-draft-1.schema.json": {
+      "sha256": "4af5dc5f48bce1bc2ba5cb6664dd2c28adcadd818c74da0e78fe428f6f6ec55b",
+      "bytes": 6001
+    }
+  }
+}

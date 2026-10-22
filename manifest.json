@@ -1,0 +1,196 @@
+{
+  "contractVersion": 1,
+  "id": "countries",
+  "name": "Countries",
+  "description": "Countries and territories with ISO 3166-1 alpha-2 and alpha-3 codes, currency, and the latest World Bank population with its year and source; derived from GeoNames and World Bank open data (CC BY 4.0), with hand-checked name aliases for joining sample databases such as Northwind and Chinook.",
+  "domain": "Geographic reference data",
+  "siteHost": "countries.demodb.dev",
+  "aliases": [],
+  "source": {
+    "repository": "https://github.com/datatug/datatug-demo-project",
+    "revision": "ade953b68b1b18fcd50d361ed0e18b7043d8a364",
+    "path": "demo-project-1/data/geo",
+    "license": "CC-BY-4.0",
+    "licenseFile": "data-source/LICENSE.md",
+    "notes": "Derived and modified from the geo reference data vendored in datatug/datatug-demo-project (itself vendored from ingitdb/geo-ingitdb at a874fb0a95183f536cb574a5ccb45e362274eb6d). Country names, ISO codes, continent, capital, area, currency, calling code, TLD and GeoName ID come from GeoNames countryInfo.txt (CC BY 4.0); population is the latest World Bank SP.POP.TOTL observation (CC BY 4.0) with its year; 36 territories have no World Bank observation and keep a NULL population. The undated GeoNames population is not published. Aliases are hand-checked DataTug mapping data. scripts/rebuild-source.py rebuilds the SQLite fixture from the pinned recipe inputs and CI compares its full logical contents with the committed file; SQLite file bytes can vary by SQLite library version. Neither GeoNames nor the World Bank endorses this database.",
+    "recipe": [
+      {
+        "path": "demo-project-1/data/geo",
+        "files": 498,
+        "treeSha256": "cbeb6684d8aa8e474e2aed2eefaa68515c92f55b09bada430ee75870978ba899"
+      }
+    ],
+    "databaseSha256": "c0dcf133a680ed8255ab3c1960f6d3a43631cda66e030c443bc3b843ff8844db"
+  },
+  "tableDescriptions": {
+    "countries": "One row per country or territory, keyed by its ISO 3166-1 alpha-2 code: GeoNames names, codes and currency, and the latest World Bank population with its year and source.",
+    "country_aliases": "Spellings other datasets use for a country (for example Northwind's 'USA' and 'UK'), each mapped to a countries row with its provenance.",
+    "sources": "The data sources of this database with publisher, licence, attribution and the changes made.",
+    "country_names": "Every country name and every alias that differs from a name, for joining a free-text country column to countries."
+  },
+  "columnDescriptions": {
+    "countries": {
+      "iso2": "ISO 3166-1 alpha-2 code (GeoNames).",
+      "iso3": "ISO 3166-1 alpha-3 code (GeoNames).",
+      "name": "English country name (GeoNames).",
+      "continent": "GeoNames continent code: AF, AS, EU, NA, OC, SA or AN.",
+      "currency_code": "ISO 4217 currency code (GeoNames).",
+      "currency_name": "Currency name as GeoNames spells it.",
+      "area_km2": "Area in square kilometres (GeoNames).",
+      "country_source_id": "Source of the country's names and codes.",
+      "population": "Total population, World Bank SP.POP.TOTL, for population_year; NULL when the World Bank has no observation.",
+      "population_year": "Year of the World Bank population observation.",
+      "population_source_id": "Source of the population value.",
+      "population_source_url": "World Bank Indicators API call that returns this observation."
+    },
+    "country_aliases": {
+      "alias": "The exact text another dataset uses for the country.",
+      "country_iso2": "The ISO alpha-2 code of the country the alias means.",
+      "source": "Which dataset spells it this way and how the match was made."
+    }
+  },
+  "semantics": {},
+  "queries": [
+    {
+      "title": "Country of a Northwind ship country",
+      "sql": "SELECT c.name, c.iso2, c.iso3, c.currency_code, c.population, c.population_year, s.publisher AS population_source FROM country_names n JOIN countries c ON c.iso2 = n.iso2 LEFT JOIN sources s ON s.source_id = c.population_source_id WHERE n.label = 'Canada';"
+    }
+  ],
+  "capabilities": {
+    "exports": [
+      "sqlite",
+      "csv",
+      "json",
+      "sql"
+    ],
+    "ovdb": {
+      "available": true,
+      "canonicalUrl": "https://demodb.dev/countries/",
+      "serverId": "https://demodb.dev/ovdb",
+      "serverDbBaseUrl": "https://demodb.dev/ovdb/db/countries/",
+      "connection": "https://demodb.dev/ovdb/v1/databases/countries",
+      "query": true,
+      "readOnly": true,
+      "deploymentVerified": true
+    },
+    "datatug": {
+      "available": false
+    }
+  },
+  "generator": {
+    "publisher": {
+      "name": "DemoDB",
+      "url": "https://demodb.dev/",
+      "repository": "https://github.com/demo-db/countries"
+    },
+    "licences": {
+      "model": "CC0-1.0",
+      "meaning": "CC0-1.0"
+    },
+    "emitModelSpdxLicense": true,
+    "model": {
+      "address": "modelspec://github.com/demo-db/countries/countries",
+      "moduleId": "github.com/demo-db/countries/countries",
+      "name": "countries",
+      "version": "0.1.0"
+    },
+    "meaning": {
+      "id": "countries",
+      "address": "meaning://github.com/demo-db/countries",
+      "name": "Countries",
+      "description": "What the Countries reference database means: countries keyed by ISO 3166-1 code with their currency and dated population, and aliases that map other datasets' country spellings to them. Concepts extend the core country, country-code and population concepts.",
+      "license": "CC0-1.0",
+      "core": {
+        "address": "meaning://github.com/meaninggraph/core",
+        "revision": "982916d73f0a35ff2558b0062f58aa3ac4f24d97"
+      },
+      "sources": [
+        {
+          "id": "world-bank-sp-pop-totl",
+          "provider": "The World Bank",
+          "dataset": "World Development Indicators SP.POP.TOTL",
+          "title": "Population, total",
+          "license": "CC-BY-4.0",
+          "url": "https://data.worldbank.org/indicator/SP.POP.TOTL"
+        }
+      ],
+      "concepts": [
+        {
+          "id": "country",
+          "kind": "entity",
+          "label": "Country",
+          "description": "A country or territory in this database, keyed by its ISO 3166-1 alpha-2 code.",
+          "extends": "meaning://github.com/meaninggraph/core/country?ref=982916d73f0a35ff2558b0062f58aa3ac4f24d97",
+          "bindings": [
+            {"recordset": "countries", "role": "entity"},
+            {"recordset": "countries", "role": "identifier", "property": "iso2"},
+            {"recordset": "countries", "role": "display-name", "property": "name", "match": "labels"},
+            {"recordset": "country_aliases", "role": "foreign-key", "property": "country_iso2"}
+          ]
+        },
+        {
+          "id": "country-alpha3",
+          "kind": "attribute",
+          "label": "ISO alpha-3 code",
+          "description": "The country's ISO 3166-1 alpha-3 code.",
+          "extends": "country-code",
+          "of": "country",
+          "bindings": [
+            {"recordset": "countries", "role": "value", "property": "iso3", "match": "codes.alpha3"}
+          ]
+        },
+        {
+          "id": "country-currency",
+          "kind": "attribute",
+          "label": "Country currency",
+          "description": "The ISO 4217 code of the currency GeoNames lists for the country.",
+          "of": "country",
+          "bindings": [
+            {"recordset": "countries", "role": "value", "property": "currency_code"}
+          ]
+        },
+        {
+          "id": "country-population",
+          "kind": "measure",
+          "label": "Country population",
+          "description": "The World Bank total population of the country in population_year.",
+          "extends": "population",
+          "of": "country",
+          "unit": "people",
+          "source": "world-bank-sp-pop-totl",
+          "measure": {
+            "formula": "The World Bank SP.POP.TOTL value for the country in population_year.",
+            "aggregation": "none"
+          },
+          "bindings": [
+            {"recordset": "countries", "role": "value", "property": "population"}
+          ]
+        },
+        {
+          "id": "country-alias",
+          "kind": "entity",
+          "label": "Country alias",
+          "description": "A spelling another dataset uses for a country, mapped to that country.",
+          "bindings": [
+            {"recordset": "country_aliases", "role": "entity"},
+            {"recordset": "country_aliases", "role": "identifier", "property": "alias"}
+          ]
+        }
+      ]
+    },
+    "ovdb": {
+      "query": true,
+      "deployment": {
+        "engine": "sqlite",
+        "url": "https://cloud.openvaultdb.com/ovdb/dbs/countries",
+        "discovery": "https://demodb.dev/.well-known/openvaultdb"
+      },
+      "recordsets": [
+        "countries",
+        "country_aliases",
+        "sources"
+      ]
+    }
+  },
+  "dataFile": "data-source/source.sqlite"
+}

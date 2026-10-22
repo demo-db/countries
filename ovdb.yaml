@@ -1,0 +1,41 @@
+{
+  "format": "ovdb-manifest/draft-1",
+  "id": "countries",
+  "title": "Countries",
+  "description": "Countries and territories with ISO 3166-1 alpha-2 and alpha-3 codes, currency, and the latest World Bank population with its year and source; derived from GeoNames and World Bank open data (CC BY 4.0), with hand-checked name aliases for joining sample databases such as Northwind and Chinook.",
+  "homepage": "https://countries.demodb.dev/",
+  "url": "https://demodb.dev/countries/",
+  "deployment": {
+    "engine": "sqlite",
+    "url": "https://cloud.openvaultdb.com/ovdb/dbs/countries",
+    "discovery": "https://demodb.dev/.well-known/openvaultdb"
+  },
+  "model": {
+    "address": "modelspec://github.com/demo-db/countries/countries",
+    "modelspec": "model/countries.modelspec.json",
+    "hcl": "model/countries.modelspec.hcl"
+  },
+  "meaning": {
+    "file": "model/countries.meaning.yaml",
+    "graph": {
+      "id": "countries",
+      "address": "meaning://github.com/demo-db/countries"
+    }
+  },
+  "publisher": {
+    "name": "DemoDB",
+    "url": "https://demodb.dev/",
+    "repository": "https://github.com/demo-db/countries"
+  },
+  "licences": {
+    "data": "CC-BY-4.0",
+    "model": "CC0-1.0",
+    "meaning": "CC0-1.0"
+  },
+  "recordsets": [
+    "countries",
+    "country_aliases",
+    "sources"
+  ],
+  "recordset_entities": {}
+}

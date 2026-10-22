@@ -80,7 +80,7 @@
   "generator": {
     "publisher": {
       "name": "DemoDB",
-      "url": "https://demodb.dev",
+      "url": "https://demodb.dev/",
       "repository": "https://github.com/demo-db/countries"
     },
     "licences": {

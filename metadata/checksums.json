@@ -34,12 +34,12 @@
       "bytes": 2432
     },
     "manifest.json": {
-      "sha256": "fa30aeddafd01a724cc8368eee23b1a29c8c3b6b580f514eb44498ae0cf78e14",
-      "bytes": 8900
+      "sha256": "4ecb8dfd20fea6469fcdfd4e0e80980eb83d0000f3cfb78e3f7e82669308069e",
+      "bytes": 8899
     },
     "metadata/contract.json": {
-      "sha256": "cbb06695dcb8c2a71eb432ba47066bbe798fb2f6d0cf0d0c5a110aaa38e83eaf",
-      "bytes": 43046
+      "sha256": "edb2ef142b998236e12c2a4e83c3d55d1c5ad0d262dcf44a490d777c29798bcf",
+      "bytes": 43045
     },
     "metadata/schema.json": {
       "sha256": "4df189d10cd201a265ae46c3ebcb288b79e4adadc7ec9e59e439732b8e0850bc",

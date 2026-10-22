@@ -71,7 +71,7 @@
       "connection": "https://demodb.dev/ovdb/v1/databases/countries",
       "query": true,
       "readOnly": true,
-      "deploymentVerified": false
+      "deploymentVerified": true
     },
     "datatug": {
       "available": false
